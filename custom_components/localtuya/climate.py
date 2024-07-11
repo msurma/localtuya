@@ -127,9 +127,9 @@ HVAC_FAN_MODE_SETS = {
         FAN_HIGH: "high",
         FAN_TOP: "strong",
     },
-    "Low/Medium/High": {
+    "Low/Med/High": {
         FAN_LOW: "low",
-        FAN_MEDIUM: "medium",
+        FAN_MEDIUM: "med",
         FAN_HIGH: "high",
     }
 }
