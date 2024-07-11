@@ -127,9 +127,9 @@ HVAC_FAN_MODE_SETS = {
         FAN_HIGH: "high",
         FAN_TOP: "strong",
     },
-    "Low/Mid/High": {
+    "Low/Medium/High": {
         FAN_LOW: "low",
-        FAN_MEDIUM: "mid",
+        FAN_MEDIUM: "medium",
         FAN_HIGH: "high",
     }
 }
@@ -424,6 +424,7 @@ class LocaltuyaClimate(LocalTuyaEntity, ClimateEntity):
 
     async def async_turn_off(self) -> None:
         """Turn the entity off."""
+        self._swing_mode = SWING_OFF
         await self._device.set_dp(False, self._dp_id)
 
     async def async_set_preset_mode(self, preset_mode):
