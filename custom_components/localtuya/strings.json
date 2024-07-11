@@ -117,6 +117,8 @@
                     "hvac_mode_set": "HVAC Mode Set (optional)",
                     "hvac_action_dp": "HVAC Current Action DP (optional)",
                     "hvac_action_set": "HVAC Current Action Set (optional)",
+                    "hvac_swing_mode_dp": "HVAC Swing Mode DP (optional)",
+                    "hvac_swing_mode_set": "HVAC Swing Mode Set (optional)",
                     "preset_dp": "Presets DP (optional)",
                     "preset_set": "Presets Set (optional)",
                     "eco_dp": "Eco DP (optional)",

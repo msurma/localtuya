@@ -90,6 +90,12 @@ HVAC_MODE_SETS = {
         HVACMode.COOL: "cold",
         HVACMode.AUTO: "auto",
     },
+    "Cold/Dry/Wind/Hot": {
+        HVACMode.HEAT: "hot",
+        HVACMode.FAN_ONLY: "wind",
+        HVACMode.DRY: "wet",
+        HVACMode.COOL: "cold",
+    },
     "1/0": {
         HVACMode.HEAT: "1",
         HVACMode.AUTO: "0",
@@ -120,6 +126,11 @@ HVAC_FAN_MODE_SETS = {
         FAN_MEDIUM: "middle",
         FAN_HIGH: "high",
         FAN_TOP: "strong",
+    },
+    "Low/Mid/High": {
+        FAN_LOW: "low",
+        FAN_MEDIUM: "mid",
+        FAN_HIGH: "high",
     }
 }
 HVAC_SWING_MODE_SETS = {
@@ -166,6 +177,8 @@ def flow_schema(dps):
         vol.Optional(CONF_HVAC_FAN_MODE_SET): vol.In(list(HVAC_FAN_MODE_SETS.keys())),
         vol.Optional(CONF_HVAC_ACTION_DP): vol.In(dps),
         vol.Optional(CONF_HVAC_ACTION_SET): vol.In(list(HVAC_ACTION_SETS.keys())),
+        vol.Optional(CONF_HVAC_SWING_MODE_DP): vol.In(dps),
+        vol.Optional(CONF_HVAC_SWING_MODE_SET): vol.In(list(HVAC_SWING_MODE_SETS.keys())),
         vol.Optional(CONF_ECO_DP): vol.In(dps),
         vol.Optional(CONF_ECO_VALUE): str,
         vol.Optional(CONF_PRESET_DP): vol.In(dps),
@@ -360,6 +373,9 @@ class LocaltuyaClimate(LocalTuyaEntity, ClimateEntity):
     async def async_set_temperature(self, **kwargs):
         """Set new target temperature."""
         if ATTR_TEMPERATURE in kwargs and self.has_config(CONF_TARGET_TEMPERATURE_DP):
+            if self._hvac_mode == HVACMode.OFF:
+                await self.async_turn_on()
+
             temperature = round(kwargs[ATTR_TEMPERATURE] / self._target_precision)
             await self._device.set_dp(
                 temperature, self._config[CONF_TARGET_TEMPERATURE_DP]
